@@ -1,0 +1,35 @@
+name: Expo Build
+on:
+  release: 
+    types: [published]
+jobs:
+  publish:
+    name: Install and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: git fetch --prune --unshallow
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 3.x
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          expo-cache: true
+      - id: get-version
+        run: | 
+          # Get Git version
+          VERSION=$(git describe --long --tags --always)
+          echo ::set-output name=version::$VERSION
+          echo Git version $VERSION
+      - name: Expo build
+        run: | 
+          yarn install
+          expo build:android --no-wait --release-channel ${{ steps.get-version.outputs.version }}
+      - name: Create commit comment
+        uses: peter-evans/commit-comment@v1
+        with:
+          body: New build ${{ steps.get-version.outputs.version }}. Link https://expo.io/@hdecode/best-systems-mobile
+      
