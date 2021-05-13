@@ -31,5 +31,5 @@ jobs:
       - name: Create commit comment
         uses: peter-evans/commit-comment@v1
         with:
-          body: New build ${{ steps.get-version.outputs.version }}. Link https://expo.io/@hdecode/best-systems-mobile
+          body: New build ${{ steps.get-version.outputs.version }}. Link https://expo.io/@nthotuan/todo-app
       
