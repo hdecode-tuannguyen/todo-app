@@ -34,5 +34,5 @@ jobs:
       - name: Create commit comment
         uses: peter-evans/commit-comment@v1
         with:
-          body: Publish app link https://expo.io/@hdecode/best-systems-mobile?release-channel=${{ steps.get-version.outputs.version }}
+          body: Publish app link https://expo.io/@nthotuan/todo-app?release-channel=${{ steps.get-version.outputs.version }}
       
